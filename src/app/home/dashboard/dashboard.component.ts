@@ -1,16 +1,15 @@
 import { Component, HostListener } from "@angular/core";
-import { AgeSectionComponent } from "../age-section/ageSection.component";
-import { BestRentedComponent } from "../best-rented/bestRented.component";
-import { NewArrivalComponent } from "../new-arrival/newArrival.component";
-import { CategorySectionComponent } from "../category-section/categorySection.component";
+import { AgeSectionComponent } from "./age-section/ageSection.component";
+import { BestRentedComponent } from "./best-rented/bestRented.component";
 import { CarouselModule } from "primeng/carousel";
-import { MembershipTypeSectionComponent } from "../membership-type-section/membership-type-section.component";
+import { MembershipTypeSectionComponent } from "./membership-type-section/membership-type-section.component";
+import { SkillSectionComponent } from "./skill-section/skillSection.component";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   templateUrl: 'dashboard.component.html',
-  imports: [AgeSectionComponent, BestRentedComponent, NewArrivalComponent, CategorySectionComponent, CarouselModule, MembershipTypeSectionComponent],
+  imports: [AgeSectionComponent, BestRentedComponent, SkillSectionComponent, CarouselModule, MembershipTypeSectionComponent],
   styles: `
     .cc {
       color: 'white'
@@ -45,9 +44,10 @@ export class DashboardComponent {
     let banners = [];
     if (this.screenWidth < 768) {
       banners = [
-        'https://via.placeholder.com/600x600/FF5733/FFFFFF',
-        'https://via.placeholder.com/600x600/FFC300/FFFFFF',
-        'https://via.placeholder.com/600x600/C70039/FFFFFF'
+        'assets/banners/wallet.jpg',
+        'assets/banners/newarrival.jpg',
+        'assets/banners/newarrival1.jpg',
+        'assets/banners/newarrival2.jpg'
       ];
       // Set variable for small screens
     } else if (this.screenWidth >= 768 && this.screenWidth < 1024) {

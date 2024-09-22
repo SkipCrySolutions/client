@@ -23,12 +23,12 @@
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded border p-2"
             (click)="changeStoreAsWish = false; changeStorebyPincode = true"
           >
-            I want to change store by my pincode
+            I want to change my pincode
           </p>
           @if (changeStorebyPincode) {
           <div class="max-w-md mx-auto p-6 bg-white rounded-md shadow-md">
             <h2 class="text-xl font-semibold mb-4">
-              Update pincode to show nearest store
+              Change pincode to show nearest store
             </h2>
             <app-pincode-page
               (emitOutsideDeliveryZone)="isOutsideDeliveryZone = $event"
@@ -44,7 +44,7 @@
           </div>
           }
         </div>
-        <div>
+        <!-- <div>
           <p
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded border p-2"
             (click)="changeStoreAsWish = true; changeStorebyPincode = false"
@@ -90,7 +90,7 @@
             </button>
           </div>
           }
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
