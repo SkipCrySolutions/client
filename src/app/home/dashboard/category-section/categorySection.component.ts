@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ButtonModule } from "primeng/button";
 import { CarouselModule } from "primeng/carousel";
-import { ProductsService } from "../../products/products.service";
+import { ProductsService } from "../../../products/products.service";
 import { RouterModule } from "@angular/router";
 
 @Component({

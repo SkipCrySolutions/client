@@ -55,7 +55,7 @@
       </button>
     </div>
     }
-    <div class="mt-2">
+    <!-- <div class="mt-2">
       <label for="rentPeriod">Rent Period</label>
       <p-selectButton
         [options]="stateOptions"
@@ -64,10 +64,10 @@
         optionValue="value"
         (onChange)="setRentValue(daysValue, product)"
       ></p-selectButton>
-    </div>
+    </div> -->
     <div>
       <p class="text-gray-700 my-2 font-semibold">
-        Rent: &#8377; @if (daysValue === '15d') {
+        Rent for 30 days: &#8377; @if (daysValue === '15d') {
         {{ product.rent15 }}
         } @else {
         {{ product.rent30 }}
@@ -82,7 +82,8 @@
         <p class="text-gray-500 mb-2">
           Available from {{ product.NextAvailableBy | date : "MMM d, y" }}
         </p>
-        } @if (canNotify) {
+        }
+        <!-- @if (canNotify) {
         <p>You will be notified when available.</p>
         } @else {
         <button
@@ -91,7 +92,7 @@
         >
           Notify
         </button>
-        }
+        } -->
         <!-- <app-product-check [product]="product" (emitAddTocart)="addToCart($event)"></app-product-check> -->
       </div>
       } @else { @if (!productInCart) {
@@ -103,7 +104,7 @@
           Add to Cart
         </button>
       </div>
-      <app-block-product [product]="product"></app-block-product>
+      <!-- <app-block-product [product]="product"></app-block-product> -->
       <div>
         <p class="text-gray-700 mb-2">
           {{ product.Description }}
