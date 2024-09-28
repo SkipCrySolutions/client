@@ -35,9 +35,9 @@ export class ProductsService {
     return this.http.get(url);
   }
 
-  public getProductByCode(code: number): Observable<any> {
+  public getProductByCode(code: string, id: string): Observable<any> {
     const storeId = AppHelper.getFromLocalStorage('scStore');
-    const url = `/api/products/get/${code}/store/${storeId}`;
+    const url = `/api/products/get/store/${storeId}/${id}/${code}`;
     return this.http.get(url);
   }
 

@@ -38,6 +38,8 @@ import { ProductAvailableCheckComponent } from './availabilityCheck/product-chec
 export class ProductDetailsComponent implements OnInit {
   public productId: any;
 
+  private productCode: string = '';
+
   public product: any = null;
 
   responsiveOptions: any[] | undefined;
@@ -96,7 +98,8 @@ export class ProductDetailsComponent implements OnInit {
   public ngOnInit(): void {
     this.product = null;
     this.route.params.subscribe((params) => {
-      this.productId = params['Code'];
+      this.productCode = params['Code'];
+      this.productId = params['Id'];
       this.getProductByCode();
     });
   }
@@ -194,7 +197,7 @@ export class ProductDetailsComponent implements OnInit {
 
   private getProductByCode() {
     this.productService
-      .getProductByCode(this.productId)
+      .getProductByCode(this.productCode, this.productId)
       .subscribe((product: any) => {
         this.product = product;
         console.log('getProductByCode product => ', product);
