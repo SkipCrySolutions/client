@@ -75,7 +75,7 @@
       </p>
     </div>
     <div>
-      @if (!product.ShopQty) {
+      <!-- @if (!product.ShopQty) {
       <app-block-product [product]="product"></app-block-product>
       <div>
         @if (product.NextAvailableBy) {
@@ -83,7 +83,7 @@
           Available from {{ product.NextAvailableBy | date : "MMM d, y" }}
         </p>
         }
-        <!-- @if (canNotify) {
+        @if (canNotify) {
         <p>You will be notified when available.</p>
         } @else {
         <button
@@ -92,10 +92,11 @@
         >
           Notify
         </button>
-        } -->
-        <!-- <app-product-check [product]="product" (emitAddTocart)="addToCart($event)"></app-product-check> -->
+        }
+        <app-product-check [product]="product" (emitAddTocart)="addToCart($event)"></app-product-check>
       </div>
-      } @else { @if (!productInCart) {
+      } @else { -->
+         @if (!productInCart) {
       <div>
         <button
           class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded border"
@@ -122,7 +123,8 @@
           View Cart
         </button>
       </div>
-      } }
+      }
+    <!-- } -->
     </div>
   </div>
 </div>

@@ -32,7 +32,7 @@ export class ProductComponent {
   // }
 
   public loadProductDetails(product: any) {
-    this.router.navigate(['productDetails', product.Code]);
+    this.router.navigate(['productDetails', product.Code, product._id]);
   }
 }
 
