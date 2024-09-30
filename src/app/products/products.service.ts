@@ -19,7 +19,8 @@ export class ProductsService {
 
   public getProductsByAge(ageType: string): Observable<any> {
     const storeId = AppHelper.getFromLocalStorage('scStore');
-    const url = `/api/products/byAge?ageType=${ageType}&store=${storeId}`;
+    const parentStoreId = AppHelper.getFromLocalStorage('scStoreDetails').nearestStore.ParentStoreId;
+    const url = `/api/products/byAge?ageType=${ageType}&store=${storeId}&parentStore=${parentStoreId}`;
     return this.http.get(url);
   }
 
@@ -35,8 +36,7 @@ export class ProductsService {
     return this.http.get(url);
   }
 
-  public getProductByCode(code: string, id: string): Observable<any> {
-    const storeId = AppHelper.getFromLocalStorage('scStore');
+  public getProductByCode(code: string, id: string, storeId: string): Observable<any> {
     const url = `/api/products/get/store/${storeId}/${id}/${code}`;
     return this.http.get(url);
   }
@@ -50,8 +50,7 @@ export class ProductsService {
     return this.http.get(url);
   }
 
-  public getProductByStoreAvailability(code: number): Observable<any> {
-    const storeId = 'CHNPER1';
+  public getProductByStoreAvailability(code: number, storeId: string): Observable<any> {
     const url = `/api/products/checkAndGet/${code}/store/${storeId}`;
     return this.http.get(url);
   }

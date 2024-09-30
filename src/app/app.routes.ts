@@ -25,7 +25,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'contact', component: ContactComponent },
-  { path: 'productDetails/:Code/:Id', component: ProductDetailsComponent },
+  { path: 'productDetails/:Code/:Id/:StoreId', component: ProductDetailsComponent },
   { path: 'productsByAge/:agetype', component: ProductsByAgeComponent },
   {
     path: 'productsByCategory/:category',
