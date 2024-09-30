@@ -20,7 +20,7 @@ export class ProductAvailableCheckComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.productService.getProductByStoreAvailability(this.product.Code).subscribe((availableProduct: any) => {
+    this.productService.getProductByStoreAvailability(this.product.Code, this.product.StoreId).subscribe((availableProduct: any) => {
       this.isAvailable = !!availableProduct;
       this.availableProduct = availableProduct;
     });

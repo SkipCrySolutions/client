@@ -32,7 +32,8 @@ export class ProductComponent {
   // }
 
   public loadProductDetails(product: any) {
-    this.router.navigate(['productDetails', product.Code, product._id]);
+    console.log('loadProductDetails product => ', product);
+    this.router.navigate(['productDetails', product.Code, product._id, product.StoreId]);
   }
 }
 

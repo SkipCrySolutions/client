@@ -70,6 +70,8 @@ export class ProductDetailsComponent implements OnInit {
 
   public canBlockToy = true;
 
+  private storeId: string = '';
+
   constructor(
     private route: ActivatedRoute,
     private productService: ProductsService,
@@ -100,6 +102,7 @@ export class ProductDetailsComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.productCode = params['Code'];
       this.productId = params['Id'];
+      this.storeId = params['StoreId'];
       this.getProductByCode();
     });
   }
@@ -197,7 +200,7 @@ export class ProductDetailsComponent implements OnInit {
 
   private getProductByCode() {
     this.productService
-      .getProductByCode(this.productCode, this.productId)
+      .getProductByCode(this.productCode, this.productId, this.storeId)
       .subscribe((product: any) => {
         this.product = product;
         console.log('getProductByCode product => ', product);
@@ -205,7 +208,7 @@ export class ProductDetailsComponent implements OnInit {
         this.productInCart = this.local.checkIfProductInCart(product);
         console.log('productincart => ', this.productInCart);
         if (this.product.ShopQty === 0) {
-          this.productService.getProductByStoreAvailability(this.product.Code).subscribe((availableProduct: any) => {
+          this.productService.getProductByStoreAvailability(this.product.Code, this.product.StoreId).subscribe((availableProduct: any) => {
             // this.isAvailable = !!availableProduct;
             this.product = availableProduct;
             console.log('product from mother store => ', product);

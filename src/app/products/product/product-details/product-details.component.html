@@ -36,7 +36,7 @@
   <!-- Product Images -->
   <div class="md:w-3/5 md:pl-10">
     @if (product) {
-      <app-gallery [product]="product"></app-gallery>
+    <app-gallery [product]="product"></app-gallery>
     }
   </div>
 
@@ -75,15 +75,15 @@
       </p>
     </div>
     <div>
-      <!-- @if (!product.ShopQty) {
-      <app-block-product [product]="product"></app-block-product>
+      @if (!product.ShopQty) {
+      <p>Out of stock</p>
+      <!-- <app-block-product [product]="product"></app-block-product>
       <div>
         @if (product.NextAvailableBy) {
         <p class="text-gray-500 mb-2">
           Available from {{ product.NextAvailableBy | date : "MMM d, y" }}
         </p>
-        }
-        @if (canNotify) {
+        } @if (canNotify) {
         <p>You will be notified when available.</p>
         } @else {
         <button
@@ -93,10 +93,12 @@
           Notify
         </button>
         }
-        <app-product-check [product]="product" (emitAddTocart)="addToCart($event)"></app-product-check>
-      </div>
-      } @else { -->
-         @if (!productInCart) {
+        <app-product-check
+          [product]="product"
+          (emitAddTocart)="addToCart($event)"
+        ></app-product-check>
+      </div> -->
+      } @else { @if (!productInCart) {
       <div>
         <button
           class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded border"
@@ -123,8 +125,7 @@
           View Cart
         </button>
       </div>
-      }
-    <!-- } -->
+      } }
     </div>
   </div>
 </div>
