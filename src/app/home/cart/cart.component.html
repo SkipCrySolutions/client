@@ -139,9 +139,7 @@
             <div>Total Rent for toys:</div>
             <div>&#8377;{{ cartTotal | number : "1.2-2" }}</div>
           </div>
-          @if (isOdz) {
-            Please whatsapp 8248284630
-           } @else { @if (distance) {
+          @if (isOdz) { Please whatsapp 8248284630 } @else { @if (distance) {
           <div class="flex justify-between">
             <div>Delivery & Return pickup charges:</div>
             <div>
@@ -151,17 +149,24 @@
               } @else() { Free }
             </div>
           </div>
-          } } @if (appService.user()) {
+          } }
           <div class="flex justify-between">
-            <div>Coins Discount:</div>
-            <div>- &#8377;{{ totalByCoins }}</div>
+            <div class="font-semibold">Total:</div>
+            <div class="font-semibold">
+              &#8377;{{ cartTotal + deliveryTotal | number : "1.2-2" }}
+            </div>
+          </div>
+          @if (appService.user()) {
+          <div class="flex justify-between">
+            <div>Deduct from wallet:</div>
+            <div>- &#8377;{{ deductedFromWallet | number : "1.2-2" }}</div>
           </div>
           }
           <hr class="p-2" />
           <div class="flex justify-between">
-            <div class="font-semibold">Total:</div>
+            <div class="font-semibold">To Pay:</div>
             <div class="font-semibold">
-              &#8377;{{ orderTotal | number : "1.2-2" }}
+              &#8377;{{ amountToPay | number : "1.2-2" }}
             </div>
           </div>
         </div>
@@ -169,7 +174,7 @@
           @if (appService.user()) {
           <p-button
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded border"
-            (onClick)="placeOrder(cartItems)"
+            (onClick)="placeOrder()"
           >
             Place Order
           </p-button>

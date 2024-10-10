@@ -34,7 +34,7 @@ export class CartComponent {
   public dateFor30Days = "";
   public availableSunday = "";
   public orderPlaced = false;
-  public orderTotal = 0;
+  public amountToPay = 0;
   public totalByCoins = 0;
 
   public showMinOrderMessage = false;
@@ -46,6 +46,8 @@ export class CartComponent {
   public depositAmount = 0;
 
   public isOdz = false;
+
+  public deductedFromWallet = 0;
 
   constructor(private orderService: OrderService, public appService: AppService,
     private router: Router
@@ -66,13 +68,17 @@ export class CartComponent {
     }
   }
 
-  public placeOrder(cartItems: any): void {
+  public placeOrder(): void {
     console.log('user => ', this.appService.user());
     const order = {
       customerId: this.appService.user().CustomerId,
       products: [] as any,
       orderDate: AppHelper.getFormattedDate(this.today),
-      orderTotal: this.orderTotal,
+      deductFromWallet: this.deductedFromWallet,
+      toysTotal: this.cartTotal,
+      deliveryTotal: this.deliveryTotal,
+      orderTotal: this.cartTotal + this.deliveryTotal,
+      amountToPay: this.amountToPay,
       Status: 'Placed',
       addonDeposit: 0,
       isNewCustomer: this.appService.user().Status === 'New',
@@ -126,7 +132,7 @@ export class CartComponent {
   public getCart(fromManualPincode?: boolean): void {
     if (this.appService.user()) {
       this.cartTotal = 0;
-      this.orderTotal = 0;
+      this.amountToPay = 0;
       this.orderService.getCartByCustomerId().subscribe((res) => {
         if (res) {
           this.distance = this.appService.user().KmDistance;
@@ -170,11 +176,11 @@ export class CartComponent {
       this.cartTotal += rent;
       this.handleClassEFInCart(product);
     });
-    this.orderTotal += this.cartTotal;
+    this.amountToPay += this.cartTotal;
     if (!this.depositAmount) {
-      this.orderTotal += this.isOdz ? AppConstants.ODZDepostitAmount : AppConstants.DepositAmount;
+      this.amountToPay += this.isOdz ? AppConstants.ODZDepostitAmount : AppConstants.DepositAmount;
     }
-    this.orderTotal = this.orderTotal - this.coinsDiscount;
+    this.amountToPay = this.amountToPay - this.coinsDiscount;
   }
 
   private handleClassEFInCart(product: any): void {
@@ -228,12 +234,23 @@ export class CartComponent {
         }
       }
       console.log('deliveryTotal => ', this.deliveryTotal);
-      this.orderTotal += this.deliveryTotal;
+      this.amountToPay += this.deliveryTotal;
     }
   }
 
   private calculateRewards() {
-    this.totalByCoins = this.coinsCount * 1;
-    this.orderTotal -= this.totalByCoins;
+    console.log('total => ', this.amountToPay, this.appService.user().totalAmount);
+    if (this.appService.user().totalAmount) {
+      const userTotalAmount = this.appService.user().totalAmount;
+      if (userTotalAmount > this.amountToPay) {
+        this.deductedFromWallet = this.amountToPay;
+        this.amountToPay = 0;
+      } else {
+        this.amountToPay -= userTotalAmount;
+        this.deductedFromWallet = userTotalAmount;
+      }
+    }
+    console.log('orderTotal => ', this.amountToPay);
+    console.log('deductedFromWallet => ', this.deductedFromWallet);
   }
 }

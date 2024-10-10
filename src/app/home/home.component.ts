@@ -57,7 +57,7 @@ export class HomeComponent implements AfterViewInit {
     const user = AppHelper.getFromLocalStorage('scUser');
     console.log('user => ', user);
     if (user && user._id) {
-      this.userService.getUserById(user.CustomerId).subscribe((user: any) => {
+      this.userService.getUserById(user._id,user.CustomerId).subscribe((user: any) => {
         console.log('aaa => ', user);
         AppHelper.saveToLocalStorage('scUser', user);
         this.appService.user.update(() => user);

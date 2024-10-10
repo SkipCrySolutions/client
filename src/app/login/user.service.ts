@@ -12,8 +12,8 @@ export class UserService {
     return this.http.post(url, user);
   }
 
-  public getUserById(id: string) {
-    const url = `/api/users/get/${id}`;
+  public getUserById(id: string, customerCode: string) {
+    const url = `/api/users/get/${id}/${customerCode}`;
     return this.http.get(url);
   }
 

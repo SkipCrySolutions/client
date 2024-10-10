@@ -63,7 +63,8 @@ export class SignupComponent {
       Password: this.password,
       City: this.city,
       Pincode: pincode,
-      referralCodeForSignup: this.referralCode
+      referralCodeForSignup: this.referralCode,
+      StoreId: AppHelper.getFromLocalStorage('scStore')
     };
 
     this.userService.signup(user).subscribe(() => {
