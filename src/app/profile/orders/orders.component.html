@@ -23,6 +23,13 @@
       <div>
         <h2 class="text-md font-bold mb-2">Order #{{ order._id }}</h2>
         <h2>{{ order.Status }}</h2>
+        @if(order.Status === 'Delivered') {
+          <div>
+            <button class="border" (click)="returnOrder(order)">
+              Return
+            </button>
+        </div>
+        }
         <h2>Order Date: {{ order.orderDate }}</h2>
         <h2>Order Amount: &#8377;{{ order.orderTotal | number : "1.2-2" }}</h2>
       </div>
@@ -36,36 +43,45 @@
                     class="col-12"
                     *ngFor="let product of order.products; let first = first"
                   >
-                    <div
-                      class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4"
-                      [ngClass]="{ 'border-top-1 surface-border': !first }"
-                      (click)="loadProduct(product.product)"
-                    >
-                      <div class="w-1/6">
-                        <img
-                          class="shadow-2 block xl:block mx-auto border-round"
-                          [src]="
-                            'https://toyimages.s3.ap-southeast-2.amazonaws.com/' +
-                            product.product.Code +
-                            '.jpg'
-                          "
-                          [alt]="product.product.Name"
-                        />
-                      </div>
+                    <div>
                       <div
-                        class="w-3/6 flex flex-column sm:flex-row justify-between"
+                        class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4"
+                        [ngClass]="{ 'border-top-1 surface-border': !first }"
+                        (click)="loadProduct(product.product)"
                       >
-                        <div class="text-xl font-bold text-900">
-                          {{ product.product.Name }}
+                        <div class="w-1/6">
+                          <img
+                            class="shadow-2 block xl:block mx-auto border-round"
+                            [src]="
+                              'https://toyimages.s3.ap-southeast-2.amazonaws.com/' +
+                              product.product.Code +
+                              '.jpg'
+                            "
+                            [alt]="product.product.Name"
+                          />
                         </div>
-                        <div class="text-xl font-semibold">
-                          &#8377;{{ product.rentedAmount }}
+                        <div
+                          class="w-3/6 flex flex-column sm:flex-row justify-between"
+                        >
+                          <div class="text-xl font-bold text-900">
+                            {{ product.product.Name }}
+                          </div>
+                          <div class="text-xl font-semibold">
+                            &#8377;{{ product.rentedAmount }}
+                          </div>
+                        </div>
+                        <div class="w-2/6">
+                          <div>Rented for {{ product.rentedDays }}</div>
+                          <div>Return by {{ product.return }}</div>
                         </div>
                       </div>
-                      <div class="w-2/6">
-                        <div>Rented for {{ product.rentedDays }}</div>
-                        <div>Return by {{ product.return }}</div>
+                      @if (order.Status === 'Delivered') {
+                      <div>
+                        <button class="border" (click)="extendToy(product)">
+                          Extend
+                        </button>
                       </div>
+                      }
                     </div>
                   </div>
                 </div>
@@ -74,6 +90,7 @@
           </div>
         </div>
       </div>
+      <hr>
       }
     </div>
   </div>

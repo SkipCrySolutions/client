@@ -31,4 +31,16 @@ export class OrdersComponent {
   public loadProduct(product: any) {
     this.router.navigate(['productDetails', product.Code]);
   }
+
+  public extendToy(product: any) {
+    this.orderService.extendToy(product).subscribe(() => {
+      this.getOrders();
+    });
+  }
+
+  public returnOrder(order: any) {
+    this.orderService.returnOrder(order).subscribe(() => {
+      this.getOrders();
+    });
+  }
 }
