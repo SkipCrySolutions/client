@@ -1,0 +1,15 @@
+<div class="flex justify-between items-center p-3">
+  <h2 class="text-xl font-semibold">Products ({{ products.length }})</h2>
+  <app-products-filter [inputFilter]="inputFilter" (products$)="products = $event"></app-products-filter>
+</div>
+@if (products.length > 0) {
+<cdk-virtual-scroll-viewport [itemSize]="50" class="viewport">
+  <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+    <div *cdkVirtualFor="let product of products">
+      <app-product [product]="product"></app-product>
+    </div>
+  </div>
+</cdk-virtual-scroll-viewport>
+} @else {
+<div class="p-3">No products found</div>
+}

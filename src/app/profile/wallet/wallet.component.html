@@ -1,11 +1,60 @@
-<h1 class="text-2xl font-bold mb-4">My Wallet</h1>
-<p>Wallet can only be used in our toy library</p>
+@if (!walletSuccess) {
 <div>
-  <app-add-money (emitWallet)="updateWallet($event)"></app-add-money>
+  <div>
+    <h1 class="text-2xl font-bold mb-4">My Wallet</h1>
+    <p>Use wallet balance to pay us.</p>
+    <hr />
+    <p>Select option that works for you</p>
+    <div>
+      <div>
+        <label>
+          <input
+            type="radio"
+            name="pay1500"
+            value="pay1500"
+            [(ngModel)]="paymentOption"
+            (click)="amountToLoad = 1500"
+          />
+          Pay &#8377;1500 and get &#8377;1700 in wallet
+        </label>
+      </div>
+      <div>
+        <label>
+          <input
+            type="radio"
+            name="pay3000"
+            value="pay3000"
+            [(ngModel)]="paymentOption"
+            (click)="amountToLoad = 3000"
+          />
+          Pay &#8377;3000 and get &#8377;3500 in wallet
+        </label>
+      </div>
+      <div>
+        <label>
+          <input
+            type="radio"
+            name="payCustom"
+            value="payCustom"
+            [(ngModel)]="paymentOption"
+            (click)="amountToLoad = 0"
+          />
+          I don't want any discount. I will load amount as needed.
+        </label>
+      </div>
+    </div>
+    <div>
+      <app-add-money
+        [amountToLoad]="amountToLoad"
+        (emitWallet)="updateWallet($event)"
+      ></app-add-money>
+    </div>
+    <div>My wallet balance: &#8377;{{ wallet?.totalAmount }}</div>
+  </div>
 </div>
-@if (wallet) {
+} @else { @if (wallet) {
 <div>
-  <div>My Wallet: &#8377;{{ wallet.totalAmount }}</div>
+  <div>My wallet balance: &#8377;{{ wallet.totalAmount }}</div>
   <!-- <div>Wallet breakdown:</div>
   <div class="p-2 w-1/2">
     <div class="flex justify-between">
@@ -34,6 +83,8 @@
       </div>
     </div>
   </div> -->
+  @if (walletSuccess) {
+  <div class="p-2 text-green-500">Wallet loaded successfully.</div>
   <div class="p-2">
     <button
       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded border"
@@ -42,7 +93,8 @@
       Rent Now
     </button>
   </div>
+  }
 </div>
 } @else {
 <p>Failed to load wallet</p>
-}
+} }

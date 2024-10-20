@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { RouterModule } from "@angular/router";
+import { Router, RouterModule } from "@angular/router";
 import { ButtonModule } from "primeng/button";
 import { CardModule } from "primeng/card";
 
@@ -11,4 +11,11 @@ import { CardModule } from "primeng/card";
 })
 export class AgeSectionComponent {
 
+  constructor(private router: Router) { }
+
+  public navigateToProducts(ageType: string): void {
+    console.log('Navigating to age:', ageType);
+    this.router.navigate(['/products', ageType]);
+
+  }
 }

@@ -1,0 +1,106 @@
+<div class="p-4">
+  <!-- Button to open/close filter panel -->
+  <button class="flex items-center space-x-2 p-1" (click)="toggleFilterPanel()">
+    <span><i class="fa-solid fa-filter"></i>Filter</span>
+  </button>
+
+  <!-- Filter Panel -->
+  @if (isFilterPanelOpen) {
+  <div
+    class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+  >
+    <div
+      class="bg-white rounded-lg p-6 w-full max-w-2xl overflow-auto max-h-screen"
+    >
+      <div class="flex">
+        <div class="flex justify-between w-full">
+          <h2 class="text-xl font-semibold">Filter Products</h2>
+          <button
+            (click)="toggleFilterPanel()"
+            class="text-gray-500 hover:text-gray-700"
+          >
+            &times;
+          </button>
+        </div>
+      </div>
+      <hr />
+      <div class="flex">
+        <!-- Filter Types -->
+        <div class="w-1/4">
+          <ul>
+            @for (filterType of filterTypes; track $index) {
+            <li
+              (click)="selectFilterType(filterType)"
+              class="cursor-pointer px-2 py-1 hover:bg-gray-200"
+              [class.font-bold]="selectedFilterType === filterType"
+            >
+              {{ filterType }}
+            </li>
+
+            }
+          </ul>
+        </div>
+
+        <!-- Filter Options -->
+        <div class="w-3/4 ml-4">
+          @switch (selectedFilterType) { @case ('Age') { @for (age of ages;
+          track $index) {
+          <label class="block">
+            <input
+              type="checkbox"
+              class="mr-2"
+              [(ngModel)]="selectedAges[age.code]"
+            />
+            {{ age.name }}
+          </label>
+          } } @case ('Category') { @for (category of categories; track $index) {
+          <label class="block">
+            <input
+              type="checkbox"
+              class="mr-2"
+              [(ngModel)]="selectedCategories[category.code]"
+            />
+            {{ category.name }}
+          </label>
+          } } @case ('Brand') { @for (brand of brandOptions; track $index) {
+          <label class="block">
+            <input
+              type="checkbox"
+              class="mr-2"
+              [(ngModel)]="selectedBrands[brand.code]"
+            />
+            {{ brand.name }}
+          </label>
+          } } @case ('Price') { @for (price of priceOptions; track $index) {
+          <label class="block">
+            <input
+              type="checkbox"
+              class="mr-2"
+              [(ngModel)]="selectedPrices[price.code]"
+            />
+            {{ price.name }}
+          </label>
+          } } @default {
+          <p>Please select a filter type.</p>
+          } }
+        </div>
+      </div>
+      <hr />
+      <div class="flex justify-end">
+        <button
+          (click)="resetFilters()"
+          class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2"
+        >
+          Reset
+        </button>
+        <button
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          (click)="applyFilters()"
+        >
+          Apply
+        </button>
+      </div>
+    </div>
+  </div>
+  }
+</div>
