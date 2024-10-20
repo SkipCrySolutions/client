@@ -110,11 +110,10 @@
             </div>
             <div class="md:w-2/6 flex justify-between">
               <div>
-                @if (cartItem.Product.Class === 'E' || cartItem.Product.Class
-                === 'F') { @if(!classEFDelivery) {
+                @if (cartItem.Product.BudgetType === 'Platinum Big') {
+                @if(!bigToyDelivery) {
                 <span class="text-2xl font-semibold"
-                  >Sorry. Beyond 15km, Class E & Class F products cannot be
-                  deliverable</span
+                  >Sorry. Beyond 15km, this toy cannot be deliverable</span
                 >
                 } @else { * Delivery & return pickup charges applicable } }
               </div>
@@ -171,14 +170,26 @@
           </div>
         </div>
         <div class="flex justify-center p-2">
-          @if (appService.user()) {
-          <p-button
+          @if (appService.user()) { @if (walletLoadingRequired) {
+          <div class="pb-2 text-pink-500">
+            Your wallet balance is less than the amount to pay. Please load
+          </div>
+          <div>
+            <button
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded border"
-            (onClick)="placeOrder()"
+            (click)="proceedToLoadWallet()"
+          >
+            Proceed to Load Wallet
+          </button>
+          </div>
+          } @else {
+          <button
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded border"
+            (click)="placeOrder()"
           >
             Place Order
-          </p-button>
-          } @else {
+          </button>
+          } } @else {
           <div>
             <div
               class="inline-block text-green-500 font-bold p-1 cursor-pointer"

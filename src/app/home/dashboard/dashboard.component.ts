@@ -4,12 +4,14 @@ import { BestRentedComponent } from "./best-rented/bestRented.component";
 import { CarouselModule } from "primeng/carousel";
 import { MembershipTypeSectionComponent } from "./membership-type-section/membership-type-section.component";
 import { SkillSectionComponent } from "./skill-section/skillSection.component";
+import { RouterModule } from "@angular/router";
+import { AllProductsSectionComponent } from "./all-section/allproducts-section.component";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   templateUrl: 'dashboard.component.html',
-  imports: [AgeSectionComponent, BestRentedComponent, SkillSectionComponent, CarouselModule, MembershipTypeSectionComponent],
+  imports: [AllProductsSectionComponent, AgeSectionComponent, BestRentedComponent, SkillSectionComponent, CarouselModule, MembershipTypeSectionComponent, RouterModule],
   styles: `
     .cc {
       color: 'white'

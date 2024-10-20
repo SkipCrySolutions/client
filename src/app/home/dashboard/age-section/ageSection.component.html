@@ -1,7 +1,7 @@
 <div class="flex md:justify-center overflow-auto">
   <div
     class="w-1/2 md:w-full border-1 surface-border border-round m-0 text-center md:py-1 md:px-0.5 cursor-pointer"
-    [routerLink]="['productsByAge', 'preschool']"
+    (click)="navigateToProducts('preschool')"
   >
     <div class="w-64 flex-none">
       <div class="border rounded-lg p-4">
@@ -25,7 +25,7 @@
   </div>
   <div
     class="w-1/2 md:w-full border-1 surface-border border-round m-0 text-center md:py-1 md:px-0.5 cursor-pointer"
-    [routerLink]="['productsByAge', 'playschool']"
+    (click)="navigateToProducts('playschool')"
   >
     <div class="w-64 flex-none">
       <div class="border rounded-lg p-4">
@@ -51,7 +51,7 @@
   </div>
   <div
     class="w-1/2 md:w-full border-1 surface-border border-round m-0 text-center md:py-1 md:px-0.5 cursor-pointer"
-    [routerLink]="['productsByAge', 'primaryschool']"
+    (click)="navigateToProducts('primaryschool')"
   >
     <div class="w-64 flex-none">
       <div class="border rounded-lg p-4">

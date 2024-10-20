@@ -1,9 +1,0 @@
-@if (isLoading) {
-<div class="flex justify-center items-center h-screen">
-  <app-loader></app-loader>
-</div>
-} @else { @if(products.length) {
-<app-products [products]="products" [filter]="'category'"></app-products>
-} @else {
-<div class="p-3">No products found</div>
-} }

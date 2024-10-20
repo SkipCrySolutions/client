@@ -11,6 +11,7 @@ import { FormsModule } from "@angular/forms";
 import { LocationService } from "../../location.service";
 import { PincodePageComponent } from "../../landing/pincodepage/pincodepage.component";
 import { AppConstants } from "../../app.constants";
+import { Product } from "../../products/product.model";
 
 @Component({
   selector: 'app-cart',
@@ -19,14 +20,11 @@ import { AppConstants } from "../../app.constants";
   imports: [CommonModule, DataViewModule, ButtonModule, CardModule, RouterModule, FormsModule, PincodePageComponent]
 })
 export class CartComponent {
-  // Each coin worth rs1
-  public coinsCount = 0;
-  public coinsDiscount = 0;
   public distance = 0;
   public cartTotal = 0;
   public deliveryTotal = 0;
-  public classEFDelivery = true;
-  private classEFPresentAlready = false;
+  public bigToyDelivery = true;
+  private bigToyPresentAlready = false;
   public cartItems: any = [];
   public layout: 'grid' | 'list' = 'list';
   public today = new Date();
@@ -48,6 +46,8 @@ export class CartComponent {
   public isOdz = false;
 
   public deductedFromWallet = 0;
+
+  public walletLoadingRequired = false;
 
   constructor(private orderService: OrderService, public appService: AppService,
     private router: Router
@@ -160,8 +160,12 @@ export class CartComponent {
     }
   }
 
-  private addOnDeposit(product: any) {
-    return product.class === 'E' ? 500 : (product.class === 'F' ? 1000 : 0)
+  public proceedToLoadWallet(): void {
+    this.router.navigate(['profile', 'wallet']);
+  }
+
+  private addOnDeposit(product: Product): number {
+    return product.BudgetType === 'Platinum Big' ? 500 : 0;
   }
 
   private clearCart(): void {
@@ -174,43 +178,37 @@ export class CartComponent {
       const product = element.Product;
       let rent = element.rentedAmount;
       this.cartTotal += rent;
-      this.handleClassEFInCart(product);
+      this.handleBigToysInCart(product);
     });
     this.amountToPay += this.cartTotal;
     if (!this.depositAmount) {
       this.amountToPay += this.isOdz ? AppConstants.ODZDepostitAmount : AppConstants.DepositAmount;
     }
-    this.amountToPay = this.amountToPay - this.coinsDiscount;
   }
 
-  private handleClassEFInCart(product: any): void {
-    const classEFPresent = product.Class === 'E' || product.Class === 'F';
-    if (classEFPresent) {
+  private handleBigToysInCart(product: Product): void {
+    const bigToyPresent = product.BudgetType === 'Platinum Big';
+    if (bigToyPresent) {
+      console.log('distance => ', this.distance);
+      this.distance = 9;
       if (this.distance > 15) {
         // rent = 0;
-        this.classEFDelivery = false;
+        this.bigToyDelivery = false;
       } else {
         let deliveryCharge = 0;
         if (this.distance <= AppConstants.MinDistance) {
-          deliveryCharge = this.getDeliveryChargeBasedOnClassEF(product.Class, 120);
+          deliveryCharge = AppConstants.MinDistanceDeliveryChargeBigToy;
         } else if (this.distance > AppConstants.MinDistance && this.distance <= AppConstants.MediumDistance) {
-          deliveryCharge = this.getDeliveryChargeBasedOnClassEF(product.Class, 150);
+          deliveryCharge = AppConstants.MediumDistanceDeliveryChargeBigToy;
         } else {
-          deliveryCharge = this.getDeliveryChargeBasedOnClassEF(product.Class, 200);
+          deliveryCharge = AppConstants.MaxDistanceDeliveryChargeBigToy;
         }
-        this.deliveryTotal += (this.classEFPresentAlready ? (deliveryCharge * 0.5) : deliveryCharge);
+        this.deliveryTotal += (this.bigToyPresentAlready ? (deliveryCharge * 0.5) : deliveryCharge);
       }
-      this.classEFPresentAlready = true;
+      this.bigToyPresentAlready = true;
     } else {
-      this.showMinOrderMessage = this.cartTotal < 500 ? true : false;
+      this.showMinOrderMessage = this.cartTotal < AppConstants.MinCartValue ? true : false;
     }
-  }
-
-  private getDeliveryChargeBasedOnClassEF(classType: string, deliveryCharge: number) {
-    if (classType === 'F') {
-      return deliveryCharge * 1.5;
-    }
-    return deliveryCharge;
   }
 
   public calculateDeliveryCharges() {
@@ -242,15 +240,23 @@ export class CartComponent {
     console.log('total => ', this.amountToPay, this.appService.user().totalAmount);
     if (this.appService.user().totalAmount) {
       const userTotalAmount = this.appService.user().totalAmount;
-      if (userTotalAmount > this.amountToPay) {
-        this.deductedFromWallet = this.amountToPay;
-        this.amountToPay = 0;
+      console.log('userTotalAmount => ', userTotalAmount);
+      if (userTotalAmount > 0) {
+        if (userTotalAmount > this.amountToPay) {
+          this.deductedFromWallet = this.amountToPay;
+          this.amountToPay = 0;
+        } else {
+          this.amountToPay -= userTotalAmount;
+          this.deductedFromWallet = userTotalAmount;
+        }
+      }
+      console.log('orderTotal => ', this.amountToPay);
+      console.log('deductedFromWallet => ', this.deductedFromWallet);
+      if (this.amountToPay > userTotalAmount) {
+        this.walletLoadingRequired = true;
       } else {
-        this.amountToPay -= userTotalAmount;
-        this.deductedFromWallet = userTotalAmount;
+        this.walletLoadingRequired = false;
       }
     }
-    console.log('orderTotal => ', this.amountToPay);
-    console.log('deductedFromWallet => ', this.deductedFromWallet);
   }
 }

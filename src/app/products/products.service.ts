@@ -13,7 +13,9 @@ export class ProductsService {
   constructor(private http: HttpClient) { }
 
   public getAllProducts(): Observable<any> {
-    const url = `/api/products`;
+    const storeId = AppHelper.getFromLocalStorage('scStore');
+    const parentStoreId = AppHelper.getFromLocalStorage('scStoreDetails').nearestStore.ParentStoreId;
+    const url = `/api/products?store=${storeId}&parentStore=${parentStoreId}`;
     return this.http.get(url);
   }
 
@@ -43,9 +45,11 @@ export class ProductsService {
 
   public getProductBySearchKey(key: string): Observable<any> {
     const storeId = AppHelper.getFromLocalStorage('scStore');
+    const parentStoreId = AppHelper.getFromLocalStorage('scStoreDetails').nearestStore.ParentStoreId;
     let params = new HttpParams();
     params = params.set('searchKey', key);
     params = params.set('store', storeId);
+    params = params.set('parentStore', parentStoreId);
     const url = `/api/products/search?${params.toString()}`;
     return this.http.get(url);
   }
@@ -53,6 +57,17 @@ export class ProductsService {
   public getProductByStoreAvailability(code: number, storeId: string): Observable<any> {
     const url = `/api/products/checkAndGet/${code}/store/${storeId}`;
     return this.http.get(url);
+  }
+
+  public applyProductFilter(filter: any): Observable<any> {
+    const storeId = AppHelper.getFromLocalStorage('scStore');
+    const parentStoreId = AppHelper.getFromLocalStorage('scStoreDetails').nearestStore.ParentStoreId;
+    let params = new HttpParams();
+    params = params.set('store', storeId);
+    params = params.set('parentStore', parentStoreId);
+    const url = `/api/products/filter?${params.toString()}`;
+    console.log('filter ===>>>', filter);
+    return this.http.post(url, filter);
   }
 
   public getCategories() {
