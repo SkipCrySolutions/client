@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { RouterModule } from "@angular/router";
+import { Router, RouterModule } from "@angular/router";
 
 @Component({
   standalone: true,
@@ -10,4 +10,11 @@ import { RouterModule } from "@angular/router";
 })
 export class SearchBarComponent {
   public searchKey = '';
+
+  constructor(private router: Router) { }
+
+  public search(): void {
+    console.log('Searching for:', this.searchKey);
+    this.router.navigate(['/products', this.searchKey]);
+  }
 }
