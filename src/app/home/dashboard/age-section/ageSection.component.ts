@@ -16,6 +16,5 @@ export class AgeSectionComponent {
   public navigateToProducts(ageType: string): void {
     console.log('Navigating to age:', ageType);
     this.router.navigate(['/products', ageType]);
-
   }
 }

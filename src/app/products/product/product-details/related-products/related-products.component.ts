@@ -16,7 +16,7 @@ export class RelatedProductsComponent implements OnInit {
   constructor(private productService: ProductsService, private router: Router) { }
 
   public ngOnInit(): void {
-    this.productService.getProductsByCategory(this.product.Category).subscribe((products) => {
+    this.productService.applyProductFilter({ category: this.product.Category }).subscribe((products) => {
       this.products = products.filter((product: any) => product.Code !== this.product.Code);
     });
   }

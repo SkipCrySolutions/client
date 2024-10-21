@@ -12,22 +12,19 @@
         <div>Rent By Age</div>
       </div>
       <a
-        [routerLink]="['/productsByAge/preschool']"
-        (click)="closeDrawer()"
+        (click)="navigateToProductsByAge('preschool')"
         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
         role="menuitem"
         >0-3 Years</a
       >
       <a
-        [routerLink]="['/productsByAge/playschool']"
-        (click)="closeDrawer()"
+        (click)="navigateToProductsByAge('playschool')"
         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
         role="menuitem"
         >3-6 Years</a
       >
       <a
-        [routerLink]="['/productsByAge/primaryschool']"
-        (click)="closeDrawer()"
+        (click)="navigateToProductsByAge('primaryschool')"
         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
         role="menuitem"
         >6+ Years</a
@@ -41,8 +38,7 @@
       </div>
       @for (category of firstCategories; track $index) {
       <a
-        [routerLink]="['/productsByCategory/' + category.code]"
-        (click)="closeDrawer()"
+        (click)="navigateToProductsByCategory(category.code)"
         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
         role="menuitem"
         >{{ category.name }}</a

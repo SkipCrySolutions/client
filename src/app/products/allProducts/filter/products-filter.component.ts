@@ -27,7 +27,7 @@ export class ProductsFilterComponent implements OnInit {
   // public ageOptions = ['0 to 3 Years', '3 to 6 Years', '6+ Years'];
   // categoryOptions = ['Electronics', 'Fashion', 'Home & Kitchen', 'Books'];
   brandOptions = [{ name: 'Brand 1', code: 'brand1' }, { name: 'Brand 2', code: 'brand2' }, { name: 'Brand 3', code: 'brand3' }];
-  priceOptions = [{ name: '0-100', code: '0-100' }, { name: '100-200', code: '100-200' }, { name: '200-300', code: '200-300' }, { name: '300-400', code: '300-400' }, { name: '400+', code: '400' }];
+  priceOptions = [{ name: '0-100', code: 'copper' }, { name: '100-200', code: 'silver' }, { name: '200-300', code: 'gold' }, { name: '300-400', code: 'platinum' }, { name: '400+', code: 'platinumbig' }];
 
   public selectedAges: { [key: string]: boolean } = {};
   public selectedCategories: { [key: string]: boolean } = {};
@@ -53,7 +53,7 @@ export class ProductsFilterComponent implements OnInit {
       const matchedCategory = this.categories.find(category => category.code === this.inputFilter);
       const matchedBrand = this.brandOptions.find(brand => brand.code === this.inputFilter);
       const matchedPrice = this.priceOptions.find(price => price.code === this.inputFilter);
-
+      console.log('matchedPrice ===>>> ', matchedPrice);
       if (matchedAge) {
         this.selectedAges[matchedAge.code] = true;
         this.selectedFilterType = 'Age';
